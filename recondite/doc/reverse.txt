@@ -1,1 +1,0 @@
-Take an automaton in direct reading. Let S be the collection of states.

@@ -1,7 +1,0 @@
-A sequence is maximally diverse is the subsequences 
-{(u(kn + r))_n \in N: k >= 1 0 <=r <= k - 1}
-are all distinct. Shallit proves [] that Sturmian sequences are maximally 
-diverse, which makes them far from automatic.
-
-J. Shallit, Automaticity IV: Sequences, Sets, and Diversity, J. Th'eor.
-Nombres Bordeaux 8, pp. 347-367 (1996).

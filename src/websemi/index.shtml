@@ -1,0 +1,33 @@
+<html>
+<!--#include virtual="../../../header.html"-->
+<title>Test for semi-automatism.</title>
+</head>
+<!--#include virtual="../../../body.html"-->
+
+<big><big><center>Test for semi-automatism.</center></big></big>
+<p>
+This is a test for semi-automatism, but it can be used to test for 
+<i>k</i>-automatism as well.<br>
+<br>
+Please enter your substitution in the
+following form:<br>
+&#160;&#160;&#160;&#160;a>abc<br>
+&#160;&#160;&#160;&#160;b>cab<br>
+&#160;&#160;&#160;&#160;c>ab<br>
+or:<br>
+&#160;&#160;&#160;&#160;0>01<br>
+&#160;&#160;&#160;&#160;1>0<br>
+as long as you do not use any of the letters 'x' or 'X'.<br>
+<br>
+<form action="sequence.cgi">
+<textarea rows=9 cols=9 name="msg">
+a>ab
+b>ac
+c>a
+</textarea>
+<input type=submit value="Send">
+</form>
+
+<!--#include virtual="../../../footer.html"-->
+</body>
+</html>
