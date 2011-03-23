@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage{amsfonts, amssymb, gastex}
+\frenchspacing
+\begin{document}
+
+\section*{Automaton 1}
+Direct:\\
+% Picture of automaton. {{{1
+\begin{picture}(70, 20)(-10, 0)
+  \node(N0)(10,10){$a$}
+  \node(N1)(40,10){$b$}
+  \drawedge(N0,N1){0}
+  \drawloop[loopangle=0](N1){0, 1}
+  \imark(N0)
+  \rmark(N1)
+\end{picture}\\
+%}}}1
+Reverse:\\
+% Picture of reverse automaton. {{{1
+\begin{picture}(70, 50)(-20, -20)
+  \node[Nw=25](N0)(20,20){$(\{a\}, \{b\}) / \epsilon$}
+  \node[Nw=25](N1)(0,0){$(\varnothing, \{a, b\}) / b$}
+  \node[Nw=25](N2)(40,0){$(\varnothing, \{b\}) / \epsilon$}
+  \drawedge[ELside=r](N0,N1){0}
+  \drawedge(N0,N2){1}
+  \drawloop[loopangle=180](N1){0}
+  \drawloop[loopangle=0](N2){1}
+  \drawedge[curvedepth=6](N2,N1){0}
+  \drawedge[curvedepth=6](N1,N2){1}
+  \imark[iangle=90](N0)
+  \rmark(N1)
+\end{picture}\\
+%}}}1
+
+\section*{Automaton 2}
+Direct:\\
+% Picture of automaton. {{{1
+\begin{picture}(70, 20)(-10, 0)
+  \node(N0)(10,10){$a$}
+  \node(N1)(40,10){$b$}
+  \node(N2)(70,10){$c$}
+  \drawloop(N0){0}
+  \drawedge(N0,N1){1}
+  \drawedge(N1,N2){0}
+  \drawloop[loopangle=0](N2){0, 1}
+  \imark(N0)
+  \rmark(N0)
+  \rmark(N1)
+  \rmark(N2)
+\end{picture}\\
+%}}}1
+Reverse:\\
+% Picture of reverse automaton. {{{1
+\begin{picture}(70, 50)(-20, -20)
+  \node[Nw=30](N0)(30,20){$(\{a\}, \{b\}, \{c\}) / \epsilon$}
+  \node[Nw=30](N1)(0,0){$(\{a\}, \varnothing, \{b, c\}) / a$}
+  \node[Nw=30](N2)(60,0){$(\varnothing, \{a\}, \{c\}) / b$}
+  \node[Nw=30](N3)(0,-20){$(\varnothing, \varnothing, \{a, b, c\}) / c$}
+  \node[Nw=30](N4)(40,-20){$(\varnothing, \varnothing, \{b, c\}) / b$}
+  \node[Nw=30](N5)(80,-20){$(\varnothing, \varnothing, \{c\}) / \epsilon$}
+  \drawedge[ELside=r](N0,N1){0}
+  \drawedge(N0,N2){1}
+  \drawloop[loopangle=180](N1){0}
+  \drawedge[ELside=r](N1,N3){1}
+  \drawedge[ELside=r](N2,N4){0}
+  \drawedge(N2,N5){1}
+  \drawloop[loopangle=180](N3){0, 1}
+  \drawloop[loopangle=270](N4){0}
+  \drawedge(N4,N3){1}
+  \drawedge(N5,N4){0}
+  \drawloop[loopangle=0](N5){1}
+  \imark[iangle=90](N0)
+  \rmark(N1)
+  \rmark(N2)
+  \rmark(N3)
+  \rmark(N4)
+\end{picture}\\
+%}}}1
+\end{document}

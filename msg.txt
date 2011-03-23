@@ -1,0 +1,173 @@
+Hi'
+
+I had some time to have a look at your paper. My only problem is that I do not 
+really know what you are waiting for. So I will give you all my thoughts 
+about it...
+
+To summary the problem, you consider a substitution $\sigma$ which gives you 
+in a natural way an automaton and therefore a regular language $L$. On the 
+other hand, the substitution also defines a numeration system built over a 
+sequence of integers given by the lengths of $\sigma^n(i)$. The main question 
+is then when the representation of $n$ in the numeration system coincide with 
+the $n$-th word of the language $L$ (supposed to be lexicographically 
+ordered) ?
+
+Do you want to submit it for publication ? If this is the case, you should not 
+do it in its actual form because you recall a lot a well-known things. But 
+the question you are considering is certainly of interest and I'm not sure it 
+has already been investigated (see comments below especially the 
+Dumont-Thomas' papers). So if you have enough results for this main question 
+about the relationship between the two notions, a short note of a few pages 
+could be something.
+
+Now, I will give you my comments, suggestions, questions in chronological 
+order of your paper.
+
+1) you are interested in substitutions giving rise to numeration systems. A 
+few years ago, Arnaud Maes (who has now turned to insurance company instead 
+of mathematical research) has considered such a concept. Maybe you can obtain 
+some of his papers (see on MathReview). I have his thesis where such systems 
+are just a remark but he defines the representation of $n$ as the $n$-th word 
+accepted by the automaton related to the substitution.
+
+2) a typo remark, p.2 in def. 2.0.1 the words "output alphabet" and "output 
+function" should be emphasized.
+
+3) in your def. 2.0.4, the definition of a substitution certainly requires a 
+special initial symbol and not only the mapping $\sigma$.
+You can also make use of $\mathcal{A}^+$ instead of 
+$\mathcal{A}^*-\{\epsilon\}$ since you have defined this operation earlier.
+
+4) you speak of numeration systems, two papers I really like are the 
+following. The first one is a nice survey on integer base systems :
+
+Bruyère, Véronique; Hansel, Georges; Michaux, Christian; Villemaire, Roger 
+Logic and $p$-recognizable sets of integers. Journées Montoises (Mons, 1992). 
+Bull. Belg. Math. Soc. Simon Stevin 1 (1994), no. 2, 191--238.
+
+(it includes discussion on "p-subsitution")
+
+and the second one (also include a part on substitutions) is a generalization 
+to "Bertrand systems":
+
+Bruyère, Véronique; Hansel, Georges Bertrand numeration systems and 
+recognizability. Latin American Theoretical INformatics (Valparaíso, 1995). 
+Theoret. Comput. Sci. 181 (1997), no. 1, 17--43.
+
+5) p.5, this is something I do not really understand... the definition of 
+"full numeration system".  In your definition 2.0.9, do you assume that the 
+words A and B are the greedy representations ? because, for instance, take 
+the usual decimal system,  500+600=1100, 11=5+6<U_2=100 but eleven is not an 
+admissible digit, so (11)00 is not a valid greedy representation.
+If this is not the way we have to understand this, then every system is full 
+automatic, if n=a_k U_k+... + a_0 U_0 and m=b_k U_k+... + b_0 U_0 then we 
+have m+n=(a_k+b_k) U_k+... + (a_0+b_0) U_0.
+
+The thing is certainly clear for you but maybe not the way you write it. Or 
+I've read it too quickly maybe !
+
+6) the association of an automaton to a substitution is something classical. 
+You can find it in the semial paper of Cobham :
+
+Cobham, Alan Uniform tag sequences. Math. Systems Theory 6 (1972), 164--192.
+
+7) Lemma 3.1.1 is familiar to me. Indeed, I've used its corollary 3.2.1 in one 
+of my papers:
+
+Rigo, Michel; Maes, Arnaud More on generalized automatic sequences. J. Autom. 
+Lang. Comb. 7 (2002), no. 3, 351--376. 
+
+you can download a preprint of it on my homepage www.discmath.ulg.ac.be 
+and go to the topic "research" (see page 11, Lemma 22 of the preprint).
+
+8) p.5, I like the idea of "Computation tree".
+
+9) p.7, you ignore words with leading zeroes. I do the same in the above cited 
+paper.
+
+10) p.8 "which have" -> "which has", "a priory" -> "a priori".
+
+11) "The problem is that we cannot give the n-th word of a regular 
+language"... This is something I've tried to do in the past few years. 
+Indeed, I have such an algorithm for an arbitrary regular language (this 
+algorithm uses sequences related to the number of words accepted from the 
+different states of the automaton). You can have a look at the paper :
+
+P. Lecomte, M. Rigo, Numerations systems on a regular language, Theory of 
+Comput. Syst. 34 (2001), 27--44.
+
+or also, in my PhD thesis where I give more details (once again, everything is 
+on my web-page). See page 16 of my thesis.
+
+12) p.8-11 and in particular lemma 5.0.2. Something you definitively need to 
+look at are the Dumont-Thomas' papers. I'm sorry I'm not able to put my hand 
+on it but I'm pretty sure they define exactly the same kind of numeration as 
+you do ! at least, they give a few things on this topic in the following 
+paper :
+
+Dumont, Jean-Marie; Thomas, Alain Digital sum moments and substitutions. Acta 
+Arith. 64 (1993), no. 3, 205--225.
+
+but maybe also in : 
+
+Dumont, J.-M.; Thomas, A. Digital sum problems and substitutions on a finite 
+alphabet. J. Number Theory 39 (1991), no. 3, 351--366.
+
+I know that there are also able to define representation of real number using 
+substitutions.
+
+13) p.11, I do not agree with your definition of greedy expansion 5.1.1. I 
+think you should have a condition like :
+$\sum_{i=0}^{j-1} a_i U_i <U_j$ which has to hold for all $j$.
+
+14) p.15, I have a problem to understand the meaning of theorem 6.0.5.
+Does it simply mean that the image of $\sigma_0$ has $\sigma_0$ as prefix ? 
+Moreover, it is akward to say "let $\sigma_0,\ldots,\sigma_m$ be a 
+substitution. Because a substitution is a mapping, here it seems that the 
+$\sigma_i$'s are letters...
+
+15) at the end of page 15, you speak of minimality. I'm sure the minimality is 
+so obvious in the context we consider. Indeed, minimal automaton of a regular 
+language is something well-known but here we speak of minimal automaton with 
+respect to the generated sequence. For instance, with the Thue-Morse sequence 
+a->ab, b->ba, the obtained automaton is not the minimal automaton of the 
+language \{a,b\}^*. So for me, such a "minimal" behaviour is not so clear. 
+But once again maybe I read it too quickly but I just wanted to warn you 
+about this point.
+
+16) p. 18, for reverse reading, once again you can have a lookt at the 
+"Maes/Rigo" paper where we also define kernels for arbitrary regular 
+languages. This definition relies once again on "abstract numeration systems" 
+where any integer $n$ is represented ny the $n$-th word of an ordered regular 
+language.
+
+
+I hope that I was not too long. My first advice is to have a look at 
+Dumont-Thomas. With this e-mail, I give you the master thesis of a student of 
+Valerie Berthe (who Robert knows well). Unfortunately, this document is in 
+french but it should include something on substitutive-numeration systems.
+
+Do not hesitate to recontact me for any reason. If I have enough time, I will 
+be pleased to help you.
+
+Best regards,
+
+Michel.
+
+-- 
+
+CANT'06 visit http://www.cant2006.ulg.ac.be
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Michel Rigo
+Institute of Mathematics
+University of Liege
+Grande Traverse 12 (B37),
+B-4000 Liege,
+Belgium.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+M.Rigo@ulg.ac.be
+http://www.discmath.ulg.ac.be/
+Phone : ++32-4-3669487
+FAX : ++32-4-3669547
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+

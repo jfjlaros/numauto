@@ -1,0 +1,825 @@
+\documentclass{article}
+\title{\Huge{Semi-automatic sequences}}
+\author{Jeroen F. J. Laros}
+\date{\today}
+\usepackage{/home/jeroen/studie/dw/graphs/graphs}
+\usepackage{amsfonts, amssymb}
+\frenchspacing
+\begin{document}
+
+\newcommand{\qed}{$\blacksquare$}
+\newcommand{\monoit}[1]{\texttt{\textit{#1}}}
+\newcommand{\spaces}{\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;
+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;
+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+The Fibonacci substitution caught our interest because it defines an 
+enumeration system and we wondered if there are other substitutions having the
+same property. It seems that there is at least one class of substitutions
+for which this property holds.
+
+\section{Definitions}
+First we shall give a couple of definitions which we will use in this document.
+
+\subsection{Substitution}
+Let $\mathcal{S}$ be a finite, non-empty alphabet, let $a \in \mathcal{S}$ be
+a letter in this alphabet and let $w \subset \mathcal{S}^+$ be a word.\\
+$\sigma$ is a substitution over $\mathcal{S}$ if 
+$\sigma(a) = w \forall(a \in \mathcal{S})$. We shall call $w$ the image of $a$
+in $\sigma$.
+
+\subsection{Automaton}
+An automaton $A = \{\mathcal{S}, \Delta, \delta, I, F, Y, \varphi\}$ in which:\\
+- $\mathcal{S}$ is the finite set of states.\\
+- $\Delta$ is the finite set of labels.\\
+- $\delta \subseteq \mathcal{S} \times \Delta \times \mathcal{S}$ is the
+collection of transitions.\\
+- $I \subseteq \mathcal{S}$ is the collection of initial states.\\
+- $I \subseteq \mathcal{S}$ is the collection of final states.\\
+- $Y$ the output alphabet.\\
+- $\varphi$ is the function from $\mathcal{S}$ to $Y$.\\
+\\
+We represent an automaton by a directed graph with a set of vertices 
+$\mathcal{S}$ called \emph{states}, a set of edges $\delta$ called 
+\emph{transitions} and specially marked subsets of states $I$ and $F$, the
+\emph{initial} and \emph{final} states.\\
+All through this document we shall take $I = \{\iota\}$ as the only initial 
+state and $F = \mathcal{S}$ as the collection of final states and we shall
+take $\Delta \subset \mathbb{N}$.\\
+Furthermore we shall usually take $Y = \mathcal{S}$ and $\varphi = Id$ as the
+output alphabet and the exit map.\\
+Note that the output function applies to the states and not to the labels.
+
+\subsection{$k^\mathrm{max}$}
+Let $\Delta \subset \mathbb{N}$ be a collection of labels, define 
+$|\Delta| = k^\mathrm{max} + 1$.\\
+Or equivalently let $\sigma$ be a substitution, define $k^\mathrm{max} + 1$ as
+the length of the largest image in $\sigma$.
+
+\subsection{Regular language}
+A language is regular if and only if it is accepted by a finite automaton.
+
+\subsection{Regular expression}
+Let $\Sigma$ be an alphabet. Then a regular expression $E$ over $\Sigma$ is
+defined recursively as one of the following types:\\
+1) $\varnothing$.\\
+2) $\epsilon$.\\
+3) $a$, where $a \in \Sigma$.\\
+4) $(E_1 \cup E_2)$, where $E_1$ and $E_2$ are regular expressions and the
+$\cup$ operator denotes a union.\\
+5) $(E_1 \cdot E_2)$, where $E_1$ and $E_2$ are regular expressions and the
+$\cdot$ operator denotes a concatenation.\\
+6) $E^*$, where $E$ is a regular expression and the $^*$ operator denotes the
+union of all powers of $E$ ($K^* = \cup_{n \in \mathbb{N}}K^n$).\\
+\\
+We usually omit the $\cdot$ in a regular expression. The $\cup$ is sometimes
+written as + or , and we use $E^+$ as an abbreviation for $E \cdot E^*$.
+
+\subsection{Fixed point}
+Let $\sigma$ be a substitution over an alphabet $\mathcal{A}$. Define 
+$\sigma_i: \mathcal{A \rightarrow A}$, which sends the letter $a$ to the 
+$(i + 1)$-th letter of $\sigma(a)$, Let $j$ be the index of the last letter
+of $\sigma(a)$. Hence $\sigma = \sigma_0 \ldots \sigma_{j - 1}$.\\
+Let $\sigma^0 = a$ and let $\sigma^1 = a \cdot w^1$, with 
+$w^1 = \sigma_1(a) ... \sigma_{j - 1}(a)$. Let $w^n = \sigma(w^{n - 1})$ and 
+let $\sigma^n = \sigma^{n - 1} \cdot \sigma(w^{n - 1})$.\\
+The fixed point $u = \sigma^\infty$.\\
+Or equivalently: The fixed point is an infinite sequence $u = \sigma(u)$.
+
+\subsection{$n$-word}
+An $n$-word is $\sigma^n(\iota)$.
+
+\section{Equivalence}
+\newtheorem{automata}{Theorem} \begin{automata} \label{aiss}
+Let $\sigma$ be a substitution which is in bijection with an automaton
+$A$, let $u$ be the fixed point of the substitution and let 
+$\mathcal{L}(A)$ be the language of the automaton. Then $u_i$ is the state 
+the automaton automaton will be in after it is fed with its $i$-th word of 
+its input language.
+\end{automata}
+\paragraph{Proof}
+We can write the automaton as a tree, by doing this we can find $\sigma^n$ by
+reading all states at depth $n$. We need to prove that the densification of
+the tree is equal to the construction of the fixed point.\\
+Hypothesis: 
+$\sigma^n = \sigma(\sigma^{n - 1}) = \sigma^{n - 1} \cdot \sigma(w^{n - 1})$.\\
+Base: It is true for $\sigma^0$ by definition and it also holds for 
+$\sigma^1$.\\
+Induction step: 
+$\sigma^{n + 1} = \sigma(\sigma^{n - 1} \cdot \sigma(w^{n - 1})) =
+\sigma(\sigma^{n - 1}) \cdot \sigma(\sigma(w^{n - 1})) =
+\sigma^n \cdot \sigma(w^n)$.\\
+\\
+Note that the path leading to the $i$-th state (from the left) at depth $n$ 
+is the $i$-th word of the language $\mathcal{L}(A)$, this is always true 
+because of the recurrent nature of the tree.
+\paragraph{An example}
+% Picture of automaton. {{{1
+\vbox{
+\ \\
+\ \\
+\begin{eqnarray*}
+\spaces
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& cb\\
+c &\rightarrow& b
+\end{array} \right.
+\end{eqnarray*}
+\begin{graph}(0, 0)(-4, -1)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \diredge{s1}{s2} \edgetext{s1}{s2}{1}
+  \dirbow{s2}{s3}{.2} \bowtext{s2}{s3}{.2}{0}
+  \dirloopedge{s2}{50}(0, 1) \freetext(0, 1.6){1}
+  \dirbow{s3}{s2}{.2} \bowtext{s3}{s2}{.2}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}}\ \\
+%}}}1
+The fixed point of $\sigma$ with $a$ as the initial letter is:\\
+\\
+\monoit{u = abcbbcbcbbcbbcbcbbcbcbbcbbcbcbbcbbcbcbbcbcbbcbbcbcbbc\ldots}\\
+\\
+And\\
+\\
+$\mathcal{L}(A) = \{\epsilon, 0, 1, 10, 11, 100, 110, 111, 1000, 1001, 1100, 
+1110, 1111, 10000, \ldots\}$\\
+% Picture of automaton. {{{1
+\begin{graph}(0, 7)(-4, -2)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(0, 4) \nodetext{s1}(0, 0){$a$} % level 0
+  \freetext(6.02, 4){$\sigma^0 = a$}
+
+  \roundnode{s2}(-2, 2)  \nodetext{s2}(0, 0){$a$} % level 1
+  \roundnode{s3}(2, 2)  \nodetext{s3}(0, 0){$b$}
+  \freetext(6.1, 2){$\sigma^1 = ab$}
+
+  \roundnode{s4}(-3, 0)  \nodetext{s4}(0, 0){$a$} % level 2
+  \roundnode{s5}(-1, 0)  \nodetext{s5}(0, 0){$b$}
+  \roundnode{s6}(1, 0)  \nodetext{s6}(0, 0){$c$}
+  \roundnode{s7}(3, 0)  \nodetext{s7}(0, 0){$b$}
+  \freetext(6.25, 0){$\sigma^2 = abcb$}
+
+  \roundnode{s8}(-3.5, -2)  \nodetext{s8}(0, 0){$a$} % level 3
+  \roundnode{s9}(-2.5, -2)  \nodetext{s9}(0, 0){$b$}
+  \roundnode{s10}(-1.5, -2) \nodetext{s10}(0, 0){$c$}
+  \roundnode{s11}(-0.5, -2)  \nodetext{s11}(0, 0){$b$}
+  \roundnode{s12}(1, -2)  \nodetext{s12}(0, 0){$b$}
+  \roundnode{s13}(2.5, -2)  \nodetext{s13}(0, 0){$c$}
+  \roundnode{s14}(3.5, -2)  \nodetext{s14}(0, 0){$b$}
+  \freetext(6.48, -2){$\sigma^3 = abcbbcb$}
+
+  \diredge{s1}{s2} \edgetext{s1}{s2}{0}
+  \diredge{s1}{s3} \edgetext{s1}{s3}{1}
+  
+  \diredge{s2}{s4} \edgetext{s2}{s4}{0}
+  \diredge{s2}{s5} \edgetext{s2}{s5}{1}
+  \diredge{s3}{s6} \edgetext{s3}{s6}{0}
+  \diredge{s3}{s7} \edgetext{s3}{s7}{1}
+
+  \diredge{s4}{s8} \edgetext{s4}{s8}{0}
+  \diredge{s4}{s9} \edgetext{s4}{s9}{1}
+  \diredge{s5}{s10} \edgetext{s5}{s10}{0}
+  \diredge{s5}{s11} \edgetext{s5}{s11}{1}
+  \diredge{s6}{s12} \edgetext{s6}{s12}{0}
+  \diredge{s7}{s13} \edgetext{s7}{s13}{0}
+  \diredge{s7}{s14} \edgetext{s7}{s14}{1}
+\end{graph}\\
+%}}}1
+
+\subsection{And...}
+Theorem \ref{aiss} is also valid for substitutions that do not have a fixed
+point, since the proof relies on the equivalence between $n$-words and the
+possible states at depth $n$.
+
+\section{Moreover}
+Although theorem \ref{aiss} is valid for all automata that are in bijection 
+with a substitution which have a fixed point (that means almost all automata), 
+it is not as useful as it might seem at first glance. The problem is that in
+general we can not give the $n$-th word of a language $\mathcal{L}$ a priory.\\
+However, there is a class of automata for which we can give the $n$-th word.
+
+\subsection{The Fibonacci substitution}
+The Fibonacci substitution:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& a
+\end{array} \right.
+\end{eqnarray*}
+With $a$ as the initial letter gives the following fixed point:\\
+\\
+\monoit{u = abaababaabaababaababaabaababaabaababaababaabaababaaba\ldots}\\
+\\
+This is the automaton associated with the substitution:\\
+% Picture of Fibonacci automaton. {{{1
+\begin{graph}(0, 3)(-4, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph} $(0 + 10)^* (\epsilon + 1)$\\
+%}}}1
+\\
+And the first elements of the language the automaton defines are:\\
+\begin{displaymath}
+\mathcal{L}(A) = \{\epsilon, 0, 1, 10, 100, 101, 1000, 1001, 1010, 10000, 
+10001, 10010, 10100, \ldots\}
+\end{displaymath}
+To make this automaton work, we need to feed it with the Zeckendorf expansion
+of an integer $n$ to get the $n$-th letter of the fixed point.
+
+\subsubsection{The Fibonacci sequence}
+Let $(F_n)_{n \in \mathbb{N}}$ be the sequence of integers defined by $F_0 = 1,
+F_1 = 2$ and for any integer $n > 1, F_{n + 1} = F_{n - 1} + F_n$.
+
+\subsubsection{The Zeckendorf expansion}
+If $n = \sum_{i = 0}^k n_i F_i$ with $n_k = 1, n_i \in \{0, 1\}$ and
+$\forall (i < k) \{n_i n_{i + 1} = 0\}$, we say that
+Zeck$(n) = n_k n_{k - 1} \ldots n_0 \in \{0, 1\}^{k + 1}$ is the Zeckendorf
+expansion of the integer $n$.\\
+\\
+If we write the partitions of
+$\mathbb{N}$ as $\mathbb{F}_a$ and $\mathbb{F}_b$,
+\begin{eqnarray*}
+\;\;\;\;\;\;\;\;\;
+  \mathbb{F}_a &=& \{0, 2, 3, 5, 7, 8, 10, 11, 13, 15, \ldots\}\\
+  \mathbb{F}_b &=& \{1, 4, 6, 9, 12, 14, 17, 19, 22, 25, \ldots\}
+\end{eqnarray*}
+Then
+\begin{eqnarray*}
+  \mathbb{F}_a &=& \{n \in \mathbb{N}, \mathrm{Zeck}(n) \in \{0, 1\}^* 0\}\\
+  \mathbb{F}_b &=& \{n \in \mathbb{N}, \mathrm{Zeck}(n) \in \{0, 1\}^* 1\}
+\end{eqnarray*}
+Hence we get an $a$ at position $n$ if $n$ ends with a 0 in the
+Zeckendorf expansion, we get an $b$ otherwise.\\
+\\
+So if we want to calculate the $n$-th word of the language this automaton 
+defines, we only have to decompose $n$ with the Zeckendorf algorithm.
+
+\subsection{Fibonacci's `brother'}
+Here is a little example of an other substitution that is `automatic':\\
+% Picture of automaton. {{{1
+\begin{eqnarray*}
+\spaces
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& b
+\end{array} \right.
+\end{eqnarray*}
+\begin{graph}(0, 1)(-4, -1.75)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \diredge{s1}{s2} \edgetext{s1}{s2}{1}
+  \dirloopedge{s2}{50}(1, 0) \freetext(1.6, 0){0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph} $0^* (\epsilon + 10^*)$\\
+%}}}1
+\\
+The enumeration system for this substitution is based on the sequence 
+$n \in \mathbb{N}^+$. So the first few expansions are as follows:
+\begin{verbatim}
+0 -> 0
+1 -> 1
+2 -> 10
+3 -> 100
+4 -> 1000
+ ...
+\end{verbatim}
+
+\section{A generalization}
+But can we find a more general way for this phenomenon? The answer seems to
+be yes for a (possibly small) class of substitutions. This class can be found
+by calculating the sequence on which the expansion is based from the 
+substitution itself. If we look at the Fibonacci substitution, we see that for
+each word $\sigma_n$:
+\begin{eqnarray*}
+|\sigma_n|_a &=& |\sigma_{n - 1}|_a + |\sigma_{n - 1}|_b\\
+|\sigma_n|_b &=& |\sigma_{n - 1}|_a
+\end{eqnarray*}
+Or in matrix form:
+\begin{displaymath} \left( \begin{array}{cc}
+1 & 1\\
+1 & 0
+\end{array} \right) \end{displaymath}
+If we now define the initial matrix as:
+\begin{displaymath} \left( \begin{array}{c}
+1 \\
+0 
+\end{array} \right) \end{displaymath}
+and multiply it repeatedly with the (2 $\times$ 2) matrix, we obtain:
+% Row of matrices. {{{1
+\begin{displaymath} 
+\left( \begin{array}{c}
+1 \\
+0 
+\end{array} \right),
+\left( \begin{array}{c}
+1 \\
+1 
+\end{array} \right),
+\left( \begin{array}{c}
+2 \\
+1 
+\end{array} \right),
+\left( \begin{array}{c}
+3 \\
+2 
+\end{array} \right),
+\left( \begin{array}{c}
+5 \\
+3 
+\end{array} \right),
+\left( \begin{array}{c}
+8 \\
+5 
+\end{array} \right),
+\left( \begin{array}{c}
+13 \\
+8 
+\end{array} \right), \ldots
+\end{displaymath}
+%}}}1
+And if we now add the rows of the matrices we obtain the Fibonacci sequence.\\
+\\
+The matrix for the `brother' of the Fibonacci sequence is
+\begin{displaymath} \left( \begin{array}{cc}
+1 & 0\\
+1 & 1
+\end{array} \right), \end{displaymath}
+which applied to the initial matrix yields the sequence of integers in 
+$\mathbb{N}^+$.\\
+By using this method we can cover all $k$-automata, the Fibonacci automaton and
+its `brother', which appear to be part of a larger class of automata.
+
+\subsection{General Zeckendorf expansion}
+Note that we need to define a more general Zeckendorf-like expansion to make
+the automata work. It seems that a simple greedy algorithm works fine in most
+cases:\\
+Let $S$ be a sequence obtained from applying the matrix of an automaton to its
+initial matrix and let $k$ be the length of the largest image of the 
+substitution. We observe that a sequence like this is increasing and grows at 
+most as fast as $k^n$.\\
+If $n = \sum_{i = 0}^k n_i S_i$ with $0 < n_k < k$ and 
+$\forall (i < k) \{0 \le n_i < k\}$, we say that $n_k n_{k - 1} \ldots n_0$ is 
+the expansion of $n$ in the $S$ enumeration system.
+
+\section{Survey}
+Now we look at which substitutions are `automatic' in their own enumeration
+system. We have already seen that the Fibonacci automaton and the $k$-automata
+have this property.
+
+\paragraph{The extended Fibonacci automata}
+Here is an example of an other substitution that is automatic in its own
+enumeration system:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ac\\
+c &\rightarrow& b
+\end{array} \right.
+\end{eqnarray*}
+This is the automaton associated with the substitution:\\
+% Picture of automaton. {{{1
+\begin{graph}(0, 3)(-4, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0}
+  \dirbow{s2}{s3}{.2} \bowtext{s2}{s3}{.2}{1}
+  \dirbow{s3}{s2}{.2} \bowtext{s3}{s2}{.2}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph} $(0 + (1 (10)^* 0))^* (\epsilon + (1 (10)^* (\epsilon + 1)))$
+%}}}1
+\footnote{From here on we will omit the regular expressions because it is 
+tedious work and because the automaton gives a more insightful picture of the
+language than the regular expression.}\\
+\\
+Just like the Fibonacci automaton, this one has a couple of `brothers and 
+sisters':
+% Picture of automaton. {{{1
+\vbox{
+\begin{eqnarray*}
+\spaces
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ac\\
+c &\rightarrow& a
+\end{array} \right.
+\end{eqnarray*}
+\begin{graph}(0, 1)(-4, -2)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{1}
+  \dirbow{s3}{s1}{.3} \bowtext{s3}{s1}{.3}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\}
+%}}}1
+% Picture of automaton. {{{1
+\vbox{
+\begin{eqnarray*}
+\spaces
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ac\\
+c &\rightarrow& c
+\end{array} \right.
+\end{eqnarray*}
+\begin{graph}(0, 1)(-4, -2)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{1}
+  \dirloopedge{s3}{50}(1,0) \freetext(3.6, 0){0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\}
+%}}}1
+And:\\
+% Picture of automaton. {{{1
+\vbox{
+\begin{eqnarray*}
+\spaces
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& c\\
+c &\rightarrow& a
+\end{array} \right.
+\end{eqnarray*}
+\begin{graph}(0, 1)(-4, -2)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \diredge{s1}{s2} \edgetext{s1}{s2}{1}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{0}
+  \dirbow{s3}{s1}{.3} \bowtext{s3}{s1}{.3}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\}
+%}}}1
+The same seems to hold for the following substitution:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ac\\
+c &\rightarrow& ad\\
+d &\rightarrow& c
+\end{array} \right.
+\end{eqnarray*}
+And also for its `family', which has four members.\\
+\\
+But we can also increase the number of transitions, instead of the number of
+states, these sequences look like this:\\
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& aab\\
+b &\rightarrow& aa\\
+\end{array} \right.
+\end{eqnarray*}
+(There are two of those, $b$ may also go to $ab$). And:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& aab\\
+b &\rightarrow& aac\\
+c &\rightarrow& a
+\end{array} \right.
+\end{eqnarray*}
+And this is the automaton associated with the last substitution:\\
+% Picture of automaton. {{{1
+\begin{graph}(0, 3)(-4, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0,1}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{2}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0,1}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{2}
+  \dirbow{s3}{s1}{.3} \bowtext{s3}{s1}{.3}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\
+%}}}1
+And here we stumble upon a family which all have a matrix of this form:
+\begin{displaymath}
+\left( \begin{array}{cccccc}
+x_{0, 0} & x_{0, 1} & x_{0, 2} & x_{0, 3} & \ldots & x_{0, n}\\
+1 & 0 & 0 & 0 & \ldots & x_{1, n}\\
+0 & 1 & 0 & 0 & \ldots & x_{2, n}\\
+0 & 0 & 1 & 0 & \ldots & x_{3, n}\\
+\vdots & \vdots & \vdots & \ddots & \ldots & \vdots\\
+0 & 0 & 0 & \ldots & 1 & x_{n, n}
+\end{array} \right)
+\end{displaymath}
+In which $x_{0, 0}$ must be larger or equal to 1, 
+$x_{0, 1}, x_{0, 1} \ldots x_{0, n}$ and $x_{1, n}, x_{2, n} \ldots x_{n, n}$ 
+may be any value between 0 and $k - 1$.\\
+\\
+But this is not the only restriction, because the following substitution has
+a valid matrix, but is not automatic:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ca\\
+c &\rightarrow& a\\
+\end{array} \right.
+\end{eqnarray*}
+The expansion sequence is as follows:
+\begin{displaymath}
+\{1, 2, 4, 7, 13, 24, 44, 81, 149, 274, 504, 927, \ldots \}
+\end{displaymath}
+And the automaton looks like this:\\
+% Picture of automaton. {{{1
+\begin{graph}(0, 3)(-4, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(2, 0)  \nodetext{s3}(0, 0){$c$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{1}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{0}
+  \dirbow{s3}{s1}{.3} \bowtext{s3}{s1}{.3}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\
+%}}}1
+And it crashes when we try to expand the number 5:
+\begin{displaymath}
+5_{10} = 101_{\mathrm{subst}}
+\end{displaymath}
+which has no other expansion.
+
+\paragraph{A guess}
+If the substitution is of this form:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& a^+ (\epsilon + b)\\
+b &\rightarrow& a^* (\epsilon + a + b + c)\\
+c &\rightarrow& a^* (\epsilon + a + b + c + d)\\
+  &\ldots     &
+\end{array} \right.
+\end{eqnarray*}
+then the associated automaton is automatic in its own enumeration system.
+
+\section{Combining automata}
+The automata described above are `basic' automata, which means that the 
+automata define their own numeration system and that the automata are minimal.
+We can use these automata as a basis for other automata.\\
+\\
+Let $\mathcal{A}$ and $\mathcal{B}$ be automata, let $\iota$ be the initial
+state of an automaton.\\
+- Start in the superstate $\{\iota, \iota\}$ and make this state the initial 
+state.\\
+- If both $\mathcal{A}$ and $\mathcal{B}$ have a transition from $\iota$ 
+labeled $i$, make a new superstate $\{a, b\}$ (the endpoints of the transitions
+in both automata) and make a new transition from $\{\iota, \iota\}$ to 
+$\{a, b\}$ labeled $i$.\\
+- Do the same for all other states.\\
+\\
+An example:\\
+% Picture of Fibonacci automaton. {{{1
+\begin{graph}(0, 3)(-4, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+  \freetext(1, 0){$\times$}
+\end{graph}
+%}}}1
+% Picture of Thue-Morse automaton. {{{1
+\begin{graph}(0, 3)(-9, -1.5)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, 0) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, 0)  \nodetext{s2}(0, 0){$b$}
+
+  \dirloopedge{s1}{50}(-1, 0) \freetext(-3.6, 0){0}
+  \dirbow{s1}{s2}{.2} \bowtext{s1}{s2}{.2}{1}
+  \dirbow{s2}{s1}{.2} \bowtext{s2}{s1}{.2}{1}
+  \dirloopedge{s2}{50}(1, 0) \freetext(1.6, 0){0}
+
+  \freetext(-2, -0.7){$\Uparrow$}
+\end{graph}\\
+%}}}1
+% Picture of Thue-Morse sequence in the Fibonacci numeration system. {{{1
+\begin{graph}(0, 5)(-6, -4)
+  \graphnodecolour{1}
+  \graphnodesize{1}
+  \roundnode{s1}(-2, -2) \nodetext{s1}(0, 0){$a$}
+  \roundnode{s2}(0, -2)  \nodetext{s2}(0, 0){$b$}
+  \roundnode{s3}(0, 0) \nodetext{s3}(0, 0){$c$}
+  \roundnode{s4}(-2, 0)  \nodetext{s4}(0, 0){$d$}
+
+  \dirloopedge{s1}{50}(-0.7, -0.7) \freetext(-3.1, -3.1){0}
+  \diredge{s1}{s2} \edgetext{s1}{s2}{1}
+  \diredge{s2}{s3} \edgetext{s2}{s3}{0}
+  \dirloopedge{s3}{50}(0.7, 0.7) \freetext(1.1, 1.1){0}
+  \diredge{s3}{s4} \edgetext{s3}{s4}{1}
+  \diredge{s4}{s1} \edgetext{s4}{s1}{0}
+
+  \freetext(-2, -2.7){$\Uparrow$}
+  \freetext(-4, -1){becomes:}
+\end{graph}\\
+%}}}1
+Here we have combined the Fibonacci automaton with the Thue-Morse automaton by
+applying the superset construction of the two automata.\\
+The result is an automaton that generates the Thue-Morse sequence in the
+Fibonacci numeration system. By using the following exit map:
+\begin{eqnarray*}
+\varphi: \left\{ \begin{array}{lll}
+a &\rightarrow& a\\
+b &\rightarrow& b\\
+c &\rightarrow& b\\
+d &\rightarrow& a
+\end{array} \right.
+\end{eqnarray*}
+We obtain the Thue-Morse sequence again, and by using this exit map:
+\begin{eqnarray*}
+\varphi: \left\{ \begin{array}{lll}
+a &\rightarrow& a\\
+b &\rightarrow& b\\
+c &\rightarrow& a\\
+d &\rightarrow& b
+\end{array} \right.
+\end{eqnarray*}
+We get the Fibonacci sequence again.
+
+\section{Problems}
+Here is a problem that sometimes occurs when we use the greedy approach, we
+could stumble upon a substitution that is automatic, but its automaton does
+not accept the language we construct. This is the result of the way our
+expansion works. Here is an example:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& aab\\
+b &\rightarrow& c\\
+c &\rightarrow& aab
+\end{array} \right.
+\end{eqnarray*}
+This is an automatic sequence and so should the following one be:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& aab\\
+b &\rightarrow& c\\
+c &\rightarrow& aac
+\end{array} \right.
+\end{eqnarray*}
+The following expansion sequence is used for the enumeration system:
+\begin{displaymath}
+\{1, 3, 7, 17, 43, 109, 275, 693, 1747, 4405, 11107, \ldots \}
+\end{displaymath}
+But the first problem we encounter is when we try to calculate the 41-th
+letter of the fixed point:
+\begin{displaymath}
+41_{10} = 2100_{\mathrm{subst}}
+\end{displaymath}
+which is not accepted by our automaton, but there is another expansion of
+41, to say:
+\begin{displaymath}
+41_{10} = 2021_{\mathrm{subst}}
+\end{displaymath}
+So how do we know which expansion to take? The answer is: use the automaton
+itself; if it rejects an input word, try the next expansion until the
+automaton accepts it or until there are no more expansions.\\
+\\
+We think that if we are dealing with an automatic sequence, we will find a 
+valid expansion before we run out of them. Moreover: the automaton should only 
+accept only one expansion if it has more than one representation. In any case, 
+there seems to be an elegant way to work around this problem. All we need to 
+do is walking through the automaton while expanding an integer, if we want to 
+expand the next `digit', we can only use the labels of the outgoing transitions.
+
+\subsection{Automatic expansion}
+Let $S$ be an expansion sequence, let $A$ be an automaton and let $A_i$ be 
+the state in which the automaton will be after reading $i$ letters of an 
+input word. Let $t(A_i)$ be the set of outgoing transitions of state $A_i$.
+If we can write any integer $n \ge 0$ as $n = \sum_{i = 0}^k n_i S_i$ with 
+$n_k \in \{0, 1, \ldots, k - 1\}$ and $n_i \in t(A_i)$ in a unique way such 
+that the automaton accepts the expansion, then Auto($n$) = 
+$n_k n_{k - 1} \ldots n_0 \in \{0, 1, \ldots, k - 1\}^{k + 1}$ is said to be 
+the automatic expansion of the integer $n$.\\
+Since we are only interested in a mapping from $\mathbb{N}^+$ to the regular
+language the automaton accepts, it makes sense to look at it this way: does
+the automatic expansion of an integer represent the integer itself?\\
+We have devised an algorithm that should answer that question for any
+substitution:\\
+Let $S_i$ be the largest integer smaller or equal to $n \cdot t(A_0)$. Let 
+$n_i$ be the largest element in $t(A_i)$ which is larger or equal to 0 when 
+multiplied with $S_i$. Repeat this process $i$ times with $n - n_i$. If we have
+0 left when we are done, then we have successfully expanded $n$.\\
+\\
+Here is an example of a non-automatic sequence:
+\begin{eqnarray*}
+\sigma: \left\{ \begin{array}{lll}
+a &\rightarrow& ab\\
+b &\rightarrow& ac\\
+c &\rightarrow& bd\\
+d &\rightarrow& c
+\end{array} \right.
+\end{eqnarray*}
+The expansion sequence is:
+\begin{displaymath}
+\{1, 2, 4, 8, 15, 29, 54, 103, 192, 364, 680, 1285, 2405, 4536, 8501, \ldots \}
+\end{displaymath}
+And we run into trouble when we hit 51:
+\begin{displaymath}
+51_{10} = 110111_{\mathrm{subst}}
+\end{displaymath}
+And there is no other expansion possible.\\
+\\
+We took this example because we can probably see that a substitution is not
+automatic (the 1 in the second row, third column should be 0):
+\begin{displaymath}
+\sigma: \left( \begin{array}{cccc}
+1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 \\
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{array} \right)
+\end{displaymath}
+The sequences for which the matrix are not valid are still interesting, because
+the associated automaton still calculates most of the letters in the fixed
+point correctly, but it leaves gaps.
+Maybe we can somehow `repair' the automaton to correct this behavior, 
+perhaps even by using a stack automaton, but this is (we think) beyond the
+scope of this document.
+
+%\section*{Important notes}
+%As you have seen this document lacks all proof, so everything stated above
+%is pure conjecture. We have used a specially developed utility to check the
+%automaticity for various substitutions, so we are not entirely sure that
+%this method is even valid, though it seems acceptable at this time.
+
+%\section*{Proofs in progress}
+%\paragraph{Theorem} By using the greedy algorithm we shall always find an
+%enumeration system.
+%\paragraph{Proof}
+%\paragraph{Theorem} The substitutions of the form described above will 
+%always be automatic in their own number system.
+%\paragraph{Proof}
+%\paragraph{Theorem} All automatic substitutions are of the class described
+%above.
+%\paragraph{Proof} At least the borderpoints are in this class...
+%\paragraph{Theorem}
+%\paragraph{Proof}
+\end{document}

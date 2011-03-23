@@ -1,0 +1,236 @@
+From root  Mon Jul  5 16:00:24 2004
+Return-Path: <hoogeboo@liacs.nl>
+Received: from pc162a.liacs.nl (IDENT:pwzYl+T+ZK9IxDOX0LiLOypDm26LaRD4@pc162a.liacs.nl [132.229.128.17])
+	by rhodium.liacs.nl (8.12.8p1/8.12.7/LIACS 1.0) with ESMTP id i65E0NRL014805
+	for <jlaros@liacs.nl>; Mon, 5 Jul 2004 16:00:23 +0200
+Received: (from hoogeboo@localhost)
+	by pc162a.liacs.nl (8.11.6/8.9.3) id i65E0PZ15955
+	for jlaros@liacs.nl; Mon, 5 Jul 2004 16:00:25 +0200
+Date: Mon, 5 Jul 2004 16:00:25 +0200
+From: Hendrik Jan Hoogeboom <hoogeboo@liacs.nl>
+To: "J. F. J. Laros" <jlaros@liacs.nl>
+Subject: automaten
+Message-ID: <20040705160025.C15411@pc162a.liacs.nl>
+References: <D291F33C586C8E48B95C26F8C805513A0150D194@mail5.lumc.nl> <200407011114.i61BEhe20618@beast.liacs.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <200407011114.i61BEhe20618@beast.liacs.nl>; from jlaros@liacs.nl on Thu, Jul 01, 2004 at 01:14:42PM +0200
+X-Virus-Scanned: by AMaViS 0.3.13pre2
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on rhodium.liacs.nl
+X-Spam-Status: No, hits=-4.0 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=2.63
+X-Spam-Level: 
+Status: RO
+
+
+\subsection{Voorbeelden}
+
+\paragraph{Laatste en eerste letter.}
+Automaat voor de taal \\
+$\{\; x\in \{a,b\}^* \mid
+\mbox{ de eerste letter van $x$ is gelijk aan de laatste
+letter van $x$} \;\}$.
+De automaat onthoudt als het ware de eerste letter die langs
+de wandeling gelezen wordt, en mag daarna alleen eindigen
+wanneer de laatste letter op de wandeling daaraan gelijk is.
+Twee versies, beschrijvend en algoritmisch.
+
+\centerline{%
+\unitlength 0.65mm
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge(N0,N1){$b$}
+  \drawedge(N1,N2){$b$}
+  \drawedge(N3,N2){$a$}
+  \drawedge(N0,N3){$a$}
+  \drawedge(N0,N2){$a,b$}
+  \drawloop[loopangle=180,ELside=r](N1){$a,b$}
+  \drawloop[loopangle=0,ELside=r](N3){$a,b$}
+  \imark[iangle=180](N0) 
+  \rmark(N2)
+\end{picture}
+\begin{picture}(160,50)(-60,10)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(20,20){}
+  \node(Naa)(50,20){$aa$}
+  \node(Nab)(80,20){$ab$}
+  \node(Nbb)(-10,20){$bb$}
+  \node(Nba)(-40,20){$ba$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Naa){$a$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nab){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nbb){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nba){$a$}
+  \drawedge(N0,Naa){$a$}
+  \drawedge[ELside=r](N0,Nbb){$b$}
+  \drawedge[curvedepth=6](Naa,Nab){$b$}
+  \drawedge[curvedepth=6](Nab,Naa){$a$}
+  \drawedge[curvedepth=6](Nba,Nbb){$b$}
+  \drawedge[curvedepth=6](Nbb,Nba){$a$}
+  \imark[iangle=90](N0)
+  \rmark(Naa)
+  \rmark(Nbb)
+\end{picture}}
+
+\paragraph{Deelwoord.}
+De taal van alle woorden over $\{a,b\}$ met deelwoord
+$aab$,\\
+$\{a,b\}^*\{\; aab \;\}\{a,b\}^*$,
+beschrijvend en algoritmisch.
+
+\centerline{\unitlength 0.65mm
+\begin{picture}(130,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,10){$\leeg$}
+  \node(N2)(50,10){$a$}
+  \node(N3)(80,10){$aa$}
+  \node(N4)(110,10){$aab$}
+  \drawedge(N1,N2){$a$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N4){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N1){$a,b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N4){$a,b$}
+  \imark[iangle=180](N1)
+  \rmark(N4)
+\end{picture}%}
+  %
+%\centerline{%
+\unitlength 0.65mm
+\begin{picture}(130,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,10){$\leeg$}
+  \node(N2)(50,10){$a$}
+  \node(N3)(80,10){$aa$}
+  \node(N4)(110,10){$aab$}
+  \drawedge(N1,N2){$a$}
+  \drawedge[curvedepth=6](N2,N1){$b$}
+  %\drawedge[curvedepth=6](N3,N2){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N3){$a$}
+  %\drawedge[curvedepth=-16,ELside=r](N4,N1){$b$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N4){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N1){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N4){$a,b$}
+  \imark[iangle=180](N1)
+  \rmark(N4)
+\end{picture}}
+
+\paragraph{Tellen.}
+Met een eindige automaat kunnen we niet onbeperkt tellen,
+zo zagen we al in Stellling~\ref{autom:stel:anbn},
+we hebben tenslotte maar een eindig aantal toestanden
+tot onze beschikking.
+
+Tellen modulo een constante (Paragraaf~\ref{subs:equiv:modulo})
+lukt wel.
+We geven automaten voor
+$\Set{ w \in \{a,b\}^* \mid \#_a(w) - \#_b(w) = 0 \pmod 4}$, 
+en\\
+$\Set{ w \in \{a,b\}^* \mid \#_a(w)  = 0 \pmod 4}$.
+
+\centerline{%
+\unitlength 0.65mm
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge[curvedepth=6](N0,N1){$a$}
+  \drawedge[curvedepth=6](N1,N2){$a$}
+  \drawedge[curvedepth=6](N2,N3){$a$}
+  \drawedge[curvedepth=6](N3,N0){$a$}
+  \drawedge[curvedepth=6](N1,N0){$b$}
+  \drawedge[curvedepth=6](N2,N1){$b$}
+  \drawedge[curvedepth=6](N3,N2){$b$}
+  \drawedge[curvedepth=6](N0,N3){$b$}
+  \imark[iangle=180](N0) 
+  \rmark(N0)
+\end{picture}
+   %
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge(N0,N1){$a$}
+  \drawedge(N1,N2){$a$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N0){$a$}
+  \drawloop[loopangle=180,ELside=r](N0){$b$}
+  \drawloop[loopangle=180,ELside=r](N1){$b$}
+  \drawloop[loopangle=0,ELside=r](N2){$b$}
+  \drawloop[loopangle=0,ELside=r](N3){$b$}
+  \imark[iangle=180](N0) 
+  \rmark(N0)
+\end{picture}}
+
+Echt modulo-rekenen met de representatie van een getal gebeurt
+in het volgende voorbeeld.
+
+\paragraph{Modulo rekenen.}
+Voor $w\in \{0,1\}^*$ bepalen we $\mathrm{val}(w)$ als de
+waarde die de string heeft, gelezen als binair getal.
+Dus, $\mathrm{val}: \{0,1\}^* \to \natN$ is een functie,
+inductief gedefinieerd door 
+
+\entry{(i)}
+$\mathrm{val}(\leeg) = 0$,
+\\
+\entry{(ii)}
+$\mathrm{val}(x0) = 2\mathrm{val}(x)$,
+\\
+\entry{}
+$\mathrm{val}(x1) = 2\mathrm{val}(x)+1$,
+voor $x\in \{0,1\}^*$.
+
+We bepalen een automaat voor de taal
+$\{\; x\in\{0,1\}^* \mid \mathrm{val}(x) = 0 \pmod 3 \;\}$.
+
+De toestanden van de automaat zijn de restklassen 
+$\overline 0,\overline 1,\overline 2$.
+Een langs een wandeling gelezen woord eindigt in de juiste restklasse.
+Dat kan door te zorgen dat elke tak de juiste berekening volgt,
+nl. 
+$(\overline i,0,\overline {2i})$ en $(\overline i,1,\overline {2i+1})$ 
+
+\centerline{%
+\unitlength 0.65mm
+\begin{picture}(120,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,20){$\overline 0$}
+  \node(N2)(50,20){$\overline 1$}
+  \node(N3)(80,20){$\overline 2$}
+  \drawloop[loopangle=180,ELside=r,ELpos=50](N1){$0$}
+  \drawedge[curvedepth=6](N1,N2){$1$}
+  \drawedge[curvedepth=6,ELpos=35](N2,N1){$1$}
+  \drawedge[curvedepth=6](N2,N3){$1$}
+  \drawedge[curvedepth=6,ELpos=35](N3,N2){$0$}
+  \drawloop[loopangle=0,ELside=r,ELpos=50](N3){$1$}
+  \imark[iangle=90](N1)
+  \rmark(N1)
+\end{picture}}
+
+
+-- 
+

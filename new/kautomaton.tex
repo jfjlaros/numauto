@@ -1,0 +1,41 @@
+\documentclass[a4paper]{article}
+
+\begin{document}
+
+\emph{Goal}
+
+Given $k$, find $c_k$ where $c$ is the fixed point.
+
+\emph{Algorithm}
+
+Let $\sigma$ be a substitution with alphabet $\Delta$ and axiom $s$.
+
+Define $t(a,n) = |\sigma(a)^n|$ and $T(a,i,n) = t(\sigma(a)_i,n)$.
+
+\begin{enumerate}
+\item Determine $t(a,n)$ for $a \in \Delta$, $a$ appears not
+as the last letter for some string in $\sigma(\Delta)$, and $n > 0$
+with $t(a,n) \leq k$.
+
+\item i:=1, x := s
+
+\item Let $l$ be the largest such that $T(x,i,l) \leq k$. Then
+$of\! fset := T(x,i,l)$ and $i := i+1$. (Note $T(s,1,l) = t(s,l)$.)
+
+\item while $l \not= 0$ do
+
+\item if $of\! fset + T(x,i,l) < k$ then
+
+\item $of\! fset := of\! fset + T(x,i,l)$ and $i := i+1$
+
+\item else $x := \sigma(x)_1$, $l := l-1$, and $i := 1$.
+
+\item od
+
+\item $r := k - of\! fset$
+
+\item return $\sigma(x)_r$
+\end{enumerate}
+
+
+\end{document}

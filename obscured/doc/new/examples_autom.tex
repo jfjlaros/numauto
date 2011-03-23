@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{amsfonts, amssymb, gastex}
+\frenchspacing
+\begin{document}
+
+\newcommand{\leeg}{\varnothing}
+
+\section{Voorbeelden}
+\centerline{%
+\unitlength 0.65mm
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge(N0,N1){$b$}
+  \drawedge(N1,N2){$b$}
+  \drawedge(N3,N2){$a$}
+  \drawedge(N0,N3){$a$}
+  \drawedge(N0,N2){$a,b$}
+  \drawloop[loopangle=180,ELside=r](N1){$a,b$}
+  \drawloop[loopangle=0,ELside=r](N3){$a,b$}
+  \imark[iangle=180](N0) 
+  \rmark(N2)
+\end{picture}
+\begin{picture}(160,50)(-60,10)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(20,20){}
+  \node(Naa)(50,20){$aa$}
+  \node(Nab)(80,20){$ab$}
+  \node(Nbb)(-10,20){$bb$}
+  \node(Nba)(-40,20){$ba$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Naa){$a$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nab){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nbb){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=50](Nba){$a$}
+  \drawedge(N0,Naa){$a$}
+  \drawedge[ELside=r](N0,Nbb){$b$}
+  \drawedge[curvedepth=6](Naa,Nab){$b$}
+  \drawedge[curvedepth=6](Nab,Naa){$a$}
+  \drawedge[curvedepth=6](Nba,Nbb){$b$}
+  \drawedge[curvedepth=6](Nbb,Nba){$a$}
+  \imark[iangle=90](N0)
+  \rmark(Naa)
+  \rmark(Nbb)
+\end{picture}}
+\centerline{\unitlength 0.65mm
+\begin{picture}(130,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,10){$\leeg$}
+  \node(N2)(50,10){$a$}
+  \node(N3)(80,10){$aa$}
+  \node(N4)(110,10){$aab$}
+  \drawedge(N1,N2){$a$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N4){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N1){$a,b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N4){$a,b$}
+  \imark[iangle=180](N1)
+  \rmark(N4)
+\end{picture}%}
+\unitlength 0.65mm
+\begin{picture}(130,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,10){$\leeg$}
+  \node(N2)(50,10){$a$}
+  \node(N3)(80,10){$aa$}
+  \node(N4)(110,10){$aab$}
+  \drawedge(N1,N2){$a$}
+  \drawedge[curvedepth=6](N2,N1){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N3){$a$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N4){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N1){$b$}
+  \drawloop[loopangle=90,ELside=r,ELpos=25](N4){$a,b$}
+  \imark[iangle=180](N1)
+  \rmark(N4)
+\end{picture}}
+\centerline{
+\unitlength 0.65mm
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge[curvedepth=6](N0,N1){$a$}
+  \drawedge[curvedepth=6](N1,N2){$a$}
+  \drawedge[curvedepth=6](N2,N3){$a$}
+  \drawedge[curvedepth=6](N3,N0){$a$}
+  \drawedge[curvedepth=6](N1,N0){$b$}
+  \drawedge[curvedepth=6](N2,N1){$b$}
+  \drawedge[curvedepth=6](N3,N2){$b$}
+  \drawedge[curvedepth=6](N0,N3){$b$}
+  \imark[iangle=180](N0) 
+  \rmark(N0)
+\end{picture}
+\begin{picture}(70,60)(-10,0)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N0)(10,10){0}
+  \node(N1)(10,40){1}
+  \node(N2)(40,40){2}
+  \node(N3)(40,10){3}
+  \drawedge(N0,N1){$a$}
+  \drawedge(N1,N2){$a$}
+  \drawedge(N2,N3){$a$}
+  \drawedge(N3,N0){$a$}
+  \drawloop[loopangle=180,ELside=r](N0){$b$}
+  \drawloop[loopangle=180,ELside=r](N1){$b$}
+  \drawloop[loopangle=0,ELside=r](N2){$b$}
+  \drawloop[loopangle=0,ELside=r](N3){$b$}
+  \imark[iangle=180](N0) 
+  \rmark(N0)
+\end{picture}}
+\centerline{
+\unitlength 0.65mm
+\begin{picture}(120,40)
+\gasset{AHLength=5.0,AHlength=5,AHangle=9.09}
+\gasset{Nw=10,Nh=10,Nmr=5}
+\gasset{ELside=l}\gasset{loopCW=n}
+  \node(N1)(20,20){$\overline 0$}
+  \node(N2)(50,20){$\overline 1$}
+  \node(N3)(80,20){$\overline 2$}
+  \drawloop[loopangle=180,ELside=r,ELpos=50](N1){$0$}
+  \drawedge[curvedepth=6](N1,N2){$1$}
+  \drawedge[curvedepth=6,ELpos=35](N2,N1){$1$}
+  \drawedge[curvedepth=6](N2,N3){$1$}
+  \drawedge[curvedepth=6,ELpos=35](N3,N2){$0$}
+  \drawloop[loopangle=0,ELside=r,ELpos=50](N3){$1$}
+  \imark[iangle=90](N1)
+  \rmark(N1)
+\end{picture}}
+\end{document}
