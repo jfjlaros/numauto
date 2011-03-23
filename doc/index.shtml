@@ -1,0 +1,32 @@
+<html>
+<!--#include virtual="../../header.shtml"-->
+  <title>Discrete dynamical systems.</title>
+</head>
+<!--#include virtual="../../body.shtml"-->
+
+<big><big><center>Discrete dynamical systems.</center></big></big>
+<p>
+You can find an introduction to <i>k</i>-automata
+<a href="automata.ps">here</a>. It is a revised version of a
+presentation I once gave.<br>
+<br>
+An <a href="automata.tgz">implementation</a> of <i>k</i>-automata
+including examples written in C.<br>
+Non-<i>k</i>-automata can also be constructed, the Fibonacci automaton is
+included as an example.<br>
+The class of automata this program accepts is described in
+<a href="semi.pdf">this</a> document about Numeration-automatic sequences.<br>
+Note that you do not need to feed an arbitrary automaton with the correct
+expansion, you could filter out all the 'garbage'.<br>
+<br>
+A simple implementation of substitutions in
+<a href="subst.tgz">general</a> used to verify the correctness of
+the constructed automata.<br>
+<br>
+An <a href="semi/">online</a> version of the program is also available and
+<a href="websemi.tgz">here</a> is the source for those who want to run this
+program on their own webserver.
+
+<!--#include virtual="../../footer.shtml"-->
+</body>
+</html>

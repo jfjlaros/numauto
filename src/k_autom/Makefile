@@ -19,5 +19,5 @@ release: $(EXEC) clean
 clean:
 	rm -f $(OBJS) core
 
-realclean: clean
+distclean: clean
 	rm -f $(EXEC)
