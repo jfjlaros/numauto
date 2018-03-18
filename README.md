@@ -1,9 +1,5 @@
 # Numeration-automatic sequences
-A simple implementation of substitutions in [general](subst.tgz)
-used to verify the correctness of the constructed automata.
-
-## Background
-This project is related to the study of
+This project contains code used in a study of
 [*k*-automata](https://www.fixedpoint.nl/study/dynsys/automata.pdf)
 and
 [Numeration-automatic sequences](https://arxiv.org/abs/cs/0605076).
@@ -21,8 +17,7 @@ Compile the main program.
 
 
 ## Usage
-The main program does not take any arguments, input is read from standard
-input.
+Input is read from standard input.
 
 The substitution schema is supplied by giving a list of production rules. Each
 production rule has one letter on the left hand side and one or more letters on
@@ -74,27 +69,36 @@ The numeration system:
 1 3 7 17 41 99 239 577
 ```
 
-To understand the output, it is probably necessary to read the
-[paper](https://arxiv.org/abs/cs/0605076), in particular:
+It is probably necessary to read the [paper](https://arxiv.org/abs/cs/0605076)
+to understand the output. The following sections are particularly relevant:
 
-- Section 5: conversion from a substitution to "The matrix".
-- Definition 2.0.7: "k" in this context.
-- Definition 2.0.6: "The fixed point".
-- Definition 2.0.8: "The numeration system".
+- Section 5: conversion from a substitution to `The matrix`.
+- Definition 2.0.7: `k` in this context.
+- Definition 2.0.6: `The fixed point`.
+- Definition 2.0.8: `The numeration system`.
+
+
+## Additional programs
+This project contains some additional code that was used during the study. Most
+of the functionality is present in the main program described above.
+
+- A programming library for [*k*-automata](src/k_autom) including examples.
+- A programming library for [Fibonacci automaton](src/fib_autom) including
+  examples.
+- An implementation of substitutions in [general](src/subst) which can be used
+  to verify the correctness of the constructed automata.
 
 
 ## Related work
-Some new insights were shared with the
-[On-Line Encyclopedia of Integer Sequences](http://oeis.org/).
+Some new insights gained during the study were shared with the
+[On-Line Encyclopedia of Integer Sequences](http://oeis.org/):
 
-The Fibonacci sequence: [A000045](http://oeis.org/A000045).
-
-Other sequences: [A101399](http://oeis.org/A101399),
-[A101400](http://oeis.org/A101400), [A101169](http://oeis.org/A101169),
-[A101197](http://oeis.org/A101197), [A101168](http://oeis.org/A101168).
+- The Fibonacci sequence ([A000045](http://oeis.org/A000045)).
+- Other sequences: [A101399](http://oeis.org/A101399),
+  [A101400](http://oeis.org/A101400), [A101169](http://oeis.org/A101169),
+  [A101197](http://oeis.org/A101197), [A101168](http://oeis.org/A101168).
 
 
 ## Acknowledgements
-Prof.dr. Robert Tijdeman
-
-Dr. Hendrik Jan Hoogeboom
+The author would like to thank Prof.dr. Robert Tijdeman and Dr. Hendrik Jan
+Hoogeboom for their numerous comments and insightful ideas.
