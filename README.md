@@ -2,7 +2,7 @@
 This project contains code used in a study of
 [*k*-automata](https://www.fixedpoint.nl/study/dynsys/automata.pdf)
 and
-[Numeration-automatic sequences](https://arxiv.org/abs/cs/0605076).
+[numeration-automatic sequences](https://arxiv.org/abs/cs/0605076).
 
 
 ## Installation
@@ -17,11 +17,10 @@ Compile the main program.
 
 
 ## Usage
-Input is read from standard input.
-
-The substitution schema is supplied by giving a list of production rules. Each
-production rule has one letter on the left hand side and one or more letters on
-the right hand side, the parts are separated by the `>` sign.
+The substitution schema is supplied by entering a list of production rules via
+standard input. Each production rule has one letter on the left hand side and
+one or more letters on the right hand side, the parts are separated by the `>`
+sign.
 
 The input can be supplied while the program is running. Press `Control-d` when
 the substitution schema is fully entered.
@@ -69,8 +68,8 @@ The numeration system:
 1 3 7 17 41 99 239 577
 ```
 
-It is probably necessary to read the [paper](https://arxiv.org/abs/cs/0605076)
-to understand the output. The following sections are particularly relevant:
+The following sections of the [paper](https://arxiv.org/abs/cs/0605076) are
+particularly relevant for the interpretation of the results:
 
 - Section 5: conversion from a substitution to `The matrix`.
 - Definition 2.0.7: `k` in this context.
